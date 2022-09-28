@@ -2,6 +2,9 @@ using Microsoft.AspNetCore.Identity;
 using System.Security;
 using Infrastructure;
 using Microsoft.EntityFrameworkCore;
+using System.Configuration;
+using DomainServices;
+using Infrastructure.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,16 +14,15 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+//EF 
+builder.Services.AddDbContext<FoodDBContext>(options => options.UseSqlServer(
+    builder.Configuration.GetConnectionString("Default")));
 
 //ID Framework
-builder.Services.AddDbContext<SecurityDbContext>(opts =>
-    opts.UseSqlServer(builder.Configuration.GetConnectionString("AuthDb"))
-        .EnableSensitiveDataLogging(true)
-);
 
-builder.Services.AddIdentity<IdentityUser, IdentityRole>()
-    .AddEntityFrameworkStores<SecurityDbContext>()
-    .AddDefaultTokenProviders();
+//DI
+builder.Services.AddScoped<IProductRepo, SQLProductRepo>();
+
 
 builder.Services.Configure<CookiePolicyOptions>(options =>
 {
