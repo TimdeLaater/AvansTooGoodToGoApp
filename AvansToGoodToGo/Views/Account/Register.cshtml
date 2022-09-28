@@ -1,0 +1,19 @@
+﻿@model LoginViewModel
+<div>
+    <div class="text-danger" asp-validation-summary="All"></div>
+    <form asp-action="Register" method="post">
+        <div>
+            <label asp-for="Username"></label>
+            <input asp-for="Username" />
+        </div>
+        <div>
+            <label asp-for="Password"></label>
+            <input asp-for="Password" />
+        </div>
+        <div>
+            <label asp-for="TypeOfUser"></label>
+            <select asp-for="TypeOfUser" asp-items="@ViewBag.UserTypeChoices"></select>
+        </div>
+        <button type="submit">Register</button>
+    </form>
+</div>
