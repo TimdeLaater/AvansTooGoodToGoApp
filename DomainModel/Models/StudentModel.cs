@@ -9,11 +9,9 @@ namespace DomainModel.Models
 {
     internal class StudentModel
     {
-        [Required(ErrorMessage = "Voer uw Email in")]
-        [DataType(DataType.EmailAddress)]
+        
         [Key]
-        public string email { get; set; }
-        [Required(ErrorMessage = "Voer uw naam in"), MaxLength(255)]
+        public string Email { get; set; }
         public string name { get; set; }
         enum Locations
         {
@@ -22,15 +20,15 @@ namespace DomainModel.Models
             Tilburg,
 
         }
-        private DateTime minumAge = DateTime.Now.AddYears(-16);
-
-        public int studentNr { get; set; }
+        private DateTime MinumAge = DateTime.Now.AddYears(-16);
+        [Key]
+        public int StudentNr { get; set; }
        
 
         [DataType(DataType.Date)]
-        public string birthDay { get; set; }
-        public string phoneNumber { get; set; }
-        public int notCollected { get; set; }   
+        public string BirthDay { get; set; }
+        public string PhoneNumber { get; set; }
+        public int NotCollected { get; set; }   
 
 
  

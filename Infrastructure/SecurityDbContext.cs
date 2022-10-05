@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -11,7 +10,6 @@ namespace Infrastructure
 {
     public class SecurityDbContext : IdentityDbContext
     {
-       
         public SecurityDbContext(DbContextOptions<SecurityDbContext> options) : base(options)
         {
 

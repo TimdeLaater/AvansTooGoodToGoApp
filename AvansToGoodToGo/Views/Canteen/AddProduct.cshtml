@@ -3,7 +3,30 @@
 *@
 @{
 }
-<div>
-    <h1 class="display-4">Voeg hier een nieuw product toe</h1>
-  
-</div>
+@model Product
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Product</title>
+</head>
+
+<body>
+    <div>
+        <h1 class="display-4">Voeg hier een nieuw product toe</h1>
+    </div>
+    <form asp-action="AddProduct" method="post">
+
+        <div asp-validation-summary="All"></div>
+        <div>
+            <label asp-for="Name">Naam</label>
+            <input asp-for="Name" />
+        </div>
+        <div>
+            <label asp-for="Alcohol">Bevat het product alcohol</label>
+            Ja<input type="radio" asp-for="Alcohol" value="true" />
+            Nee<input type="radio" asp-for="Alcohol" value="false" />
+        </div>
+        
+        <button class="btn btn-primary" type="submit">Voeg product toe</button>
+    </form>
+
+</body>

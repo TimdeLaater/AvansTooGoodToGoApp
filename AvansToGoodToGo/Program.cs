@@ -2,6 +2,9 @@ using Microsoft.AspNetCore.Identity;
 using System.Security;
 using Infrastructure;
 using Microsoft.EntityFrameworkCore;
+using System.Configuration;
+using DomainServices;
+using Infrastructure.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +14,9 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+//EF 
+builder.Services.AddDbContext<FoodDBContext>(options => options.UseSqlServer(
+    builder.Configuration.GetConnectionString("Default")));
 
 //ID Framework
 builder.Services.AddDbContext<SecurityDbContext>(opts =>
@@ -21,6 +27,21 @@ builder.Services.AddDbContext<SecurityDbContext>(opts =>
 builder.Services.AddIdentity<IdentityUser, IdentityRole>()
     .AddEntityFrameworkStores<SecurityDbContext>()
     .AddDefaultTokenProviders();
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("OnlyPowerUsersAndUp", policy => policy
+        .RequireAuthenticatedUser()
+        .RequireClaim("UserType", "poweruser"));
+
+    options.AddPolicy("OnlyRegularUsersAndUp", policy => policy
+        .RequireAuthenticatedUser()
+        .RequireClaim("UserType", "regularuser", "poweruser"));
+});
+
+//DI
+builder.Services.AddScoped<IProductRepo, SQLProductRepo>();
+
 
 builder.Services.Configure<CookiePolicyOptions>(options =>
 {

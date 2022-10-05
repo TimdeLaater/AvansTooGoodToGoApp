@@ -1,4 +1,5 @@
 ﻿using DomainModel.Models;
+using DomainServices;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,10 +8,11 @@ namespace AvansToGoodToGo.Controllers
     public class CanteenController : Controller
     {
         private readonly ILogger<CanteenController> _logger;
-
-        public CanteenController (ILogger<CanteenController> logger)
+        private readonly IProductRepo _productRepo;
+        public CanteenController (ILogger<CanteenController> logger, IProductRepo productRepo)
         {
             _logger = logger;
+            _productRepo = productRepo;
         }
         // GET: CanteenController
         public ActionResult Index()
@@ -20,7 +22,7 @@ namespace AvansToGoodToGo.Controllers
 
         public IActionResult Products()
         {
-            return View();
+            return View(_productRepo.Get().ToList());
         }
         [HttpGet]
 
@@ -29,11 +31,21 @@ namespace AvansToGoodToGo.Controllers
             return View();
         }
         [HttpPost]
-        public ViewResult AddProduct(Product product)
+        public async Task<IActionResult> AddProductAsync(Product product)
         {
-            _logger.LogInformation(product.ToString());
+            if(ModelState.IsValid)
+            {
+                if (_productRepo.Get().Exists(t => t?.Name == product.Name))
+                {
+                    ModelState.AddModelError(String.Empty, "De dit product bestaat al.");
+                    return View();
+                }
 
-            return View();
+                _productRepo.Create(product);
+                await Task.Delay(1000);
+                return View("Products");
+            }
+            return View(product);
         }
 
         // GET: CanteenController/Details/5
@@ -42,11 +54,7 @@ namespace AvansToGoodToGo.Controllers
             return View();
         }
 
-        // GET: CanteenController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
+       
 
         // POST: CanteenController/Create
         [HttpPost]
@@ -69,40 +77,8 @@ namespace AvansToGoodToGo.Controllers
             return View();
         }
 
-        // POST: CanteenController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
 
-        // GET: CanteenController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
 
-        // POST: CanteenController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+
     }
 }

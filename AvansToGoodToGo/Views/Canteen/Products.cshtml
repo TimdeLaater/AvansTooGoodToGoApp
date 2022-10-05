@@ -3,11 +3,22 @@
 *@
 @{
 }
-@model IEnumerable<DomainModel.Models.Product>
+@model IEnumerable<Product>
 <div>
     <h1 class="display-4">Welcome</h1>
     <button type="button" onclick="location.href='@Url.Action("AddProduct")'">Nieuw Product</button>
 </div>
 <div>
+    <table cellpadding="5" cellspacing="0">
+        <tr>
+            <th>Naam</th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.Name)</td>
 
+            </tr>
+        }
+    </table>
 </div>
