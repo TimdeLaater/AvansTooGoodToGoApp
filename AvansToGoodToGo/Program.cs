@@ -19,6 +19,25 @@ builder.Services.AddDbContext<FoodDBContext>(options => options.UseSqlServer(
     builder.Configuration.GetConnectionString("Default")));
 
 //ID Framework
+builder.Services.AddDbContext<SecurityDbContext>(opts =>
+    opts.UseSqlServer(builder.Configuration.GetConnectionString("AuthDb"))
+        .EnableSensitiveDataLogging(true)
+);
+
+builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+    .AddEntityFrameworkStores<SecurityDbContext>()
+    .AddDefaultTokenProviders();
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("OnlyPowerUsersAndUp", policy => policy
+        .RequireAuthenticatedUser()
+        .RequireClaim("UserType", "poweruser"));
+
+    options.AddPolicy("OnlyRegularUsersAndUp", policy => policy
+        .RequireAuthenticatedUser()
+        .RequireClaim("UserType", "regularuser", "poweruser"));
+});
 
 //DI
 builder.Services.AddScoped<IProductRepo, SQLProductRepo>();
