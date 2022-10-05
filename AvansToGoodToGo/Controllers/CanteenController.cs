@@ -31,7 +31,7 @@ namespace AvansToGoodToGo.Controllers
             return View();
         }
         [HttpPost]
-        public ViewResult AddProduct(Product product)
+        public async Task<IActionResult> AddProductAsync(Product product)
         {
             if(ModelState.IsValid)
             {
@@ -42,7 +42,8 @@ namespace AvansToGoodToGo.Controllers
                 }
 
                 _productRepo.Create(product);
-                return View("Index");
+                await Task.Delay(1000);
+                return View("Products");
             }
             return View(product);
         }

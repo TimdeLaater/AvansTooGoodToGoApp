@@ -26,19 +26,7 @@ namespace AvansToGoodToGo.Controllers
         {
             return View();
         }
-        public IActionResult Login()
-        {
-            return View();
-        }
-
-
-        [HttpPost]
-        public ViewResult login(string email, string password)
-        {
-            _logger.LogInformation(email, password);
-
-            return View();
-        }
+      
 
         [Authorize(Policy = "OnlyPowerUsersAndUp")]
         public IActionResult PowerUsersOnly()
