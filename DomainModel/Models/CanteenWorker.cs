@@ -9,9 +9,11 @@ namespace DomainModel.Models
 {
     internal class CanteenWorker
     {
-        public string name { get; set; }
+        public string Name { get; set; }
         [Key]
-        public string workerNr { get; set; }  
-        public Canteen canteen { get; set; }    
+        public string Email { get; set; }
+        [Key]
+        public string WorkerNr { get; set; }  
+        public Canteen Canteen { get; set; }    
     }
 }
