@@ -48,5 +48,13 @@ namespace AvansTooGoodToGo.Controllers
             return RedirectToAction("index", "home");
 
         }
+        public IActionResult RegistrationStudent()
+        {
+            return View();
+        }
+        public async Task<IActionResult> RegistrationStudentAsync()
+        {
+            return View();
+        }
     }
 }

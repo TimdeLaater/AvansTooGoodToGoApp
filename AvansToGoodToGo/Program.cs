@@ -30,6 +30,7 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>()
 
 builder.Services.AddAuthorization(options =>
 {
+    options.AddPolicy("CanteenWorkerAndUp", policy=> policy.RequireAuthenticatedUser().RequireClaim("UserType", "admin", "canteenWorker"));
     options.AddPolicy("OnlyPowerUsersAndUp", policy => policy
         .RequireAuthenticatedUser()
         .RequireClaim("UserType", "poweruser"));
@@ -38,6 +39,7 @@ builder.Services.AddAuthorization(options =>
         .RequireAuthenticatedUser()
         .RequireClaim("UserType", "regularuser", "poweruser"));
 });
+builder.Services.AddScoped<SecurityDbSeeder>();
 
 //DI
 builder.Services.AddScoped<IProductRepo, SQLProductRepo>();
@@ -52,7 +54,14 @@ builder.Services.Configure<CookiePolicyOptions>(options =>
     options.MinimumSameSitePolicy = SameSiteMode.None;
 });
 
+async Task SeedData(IApplicationBuilder app)
+{
+    var seedData = app.ApplicationServices
+        .CreateScope().ServiceProvider
+        .GetRequiredService<SecurityDbSeeder>();
 
+    await seedData.EnsurePopulated();
+}
 
 
 
@@ -79,5 +88,7 @@ app.UseAuthentication();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+await SeedData(app);
 
 app.Run();

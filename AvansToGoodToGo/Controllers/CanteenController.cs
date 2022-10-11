@@ -1,5 +1,6 @@
 ﻿using DomainModel.Models;
 using DomainServices;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,17 +16,18 @@ namespace AvansToGoodToGo.Controllers
             _productRepo = productRepo;
         }
         // GET: CanteenController
+     
         public ActionResult Index()
         {
             return View();
         }
-
+    
         public IActionResult Products()
         {
             return View(_productRepo.Get().ToList());
         }
         [HttpGet]
-
+       
         public IActionResult AddProduct()
         {
             return View();
@@ -49,6 +51,7 @@ namespace AvansToGoodToGo.Controllers
         }
 
         // GET: CanteenController/Details/5
+        [Authorize(Policy = "CanteenWorker")]
         public ActionResult Details(int id)
         {
             return View();
