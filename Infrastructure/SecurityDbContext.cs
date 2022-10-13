@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using DomainModel.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,7 @@ namespace Infrastructure
 {
     public class SecurityDbContext : IdentityDbContext
     {
+        public DbSet<StudentModel> StudentModel { get; set; }
         public SecurityDbContext(DbContextOptions<SecurityDbContext> options) : base(options)
         {
 
