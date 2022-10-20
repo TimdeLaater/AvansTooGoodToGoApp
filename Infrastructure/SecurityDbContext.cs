@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace Infrastructure
 {
-    public class SecurityDbContext : IdentityDbContext
+    public class SecurityDbContext : IdentityDbContext<AppUser>
     {
-        public DbSet<StudentModel> StudentModel { get; set; }
+    
         public SecurityDbContext(DbContextOptions<SecurityDbContext> options) : base(options)
         {
 

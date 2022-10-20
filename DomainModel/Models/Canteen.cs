@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DomainModel.Models
 {
-    internal class Canteen
+    public class Canteen
     {
         public int canteenId { get; set; }  
         public string location  { get; set; }
