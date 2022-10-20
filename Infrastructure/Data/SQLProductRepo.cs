@@ -11,31 +11,29 @@ namespace Infrastructure.Data
 {
     public class SQLProductRepo : IProductRepo
     {
-        FoodDBContext context = new();
+        FoodDBContext _context = new();
         public SQLProductRepo(FoodDBContext context)
         {
-            this.context = context;
+            this._context = context;
         }
         public SQLProductRepo()
         {
 
         }
 
-        public void Create(Product entity)
+        public Task<IEnumerable<Product>> GetAll()
         {
-            context.Products.Add(entity);
-            context.SaveChanges();
+            throw new NotImplementedException();
         }
 
-        public Product Get(int productId)
+        public Task<Product> GetByIdAsync(int id)
         {
-            var product = context.Products.Where(p => p.ProductId == productId);
-            return (Product)product;
+            throw new NotImplementedException();
         }
 
         public List<Product> Get()
         {
-            return context.Products.ToList();
+            throw new NotImplementedException();
         }
 
         public Product Get(Product entity)
@@ -43,12 +41,17 @@ namespace Infrastructure.Data
             throw new NotImplementedException();
         }
 
-        public void Remove(int productId)
+        public void Create(Product entity)
         {
             throw new NotImplementedException();
         }
 
-        public void Update(Product product, int productId)
+        public void Remove(Product etityId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Update(Product Entity, Product etityId)
         {
             throw new NotImplementedException();
         }
