@@ -1,6 +1,7 @@
 ﻿using DomainModel.Models;
 using DomainServices;
 using Infrastructure;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,24 +22,26 @@ namespace Infrastructure.Data
 
         }
 
-        public Task<IEnumerable<Product>> GetAll()
+        public async Task<IEnumerable<Product>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            return await _context.Products.ToListAsync();
         }
 
-        public Task<Product> GetByIdAsync(int id)
+        public async Task<Product> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            return await _context.Products.FirstOrDefaultAsync(i => i.ProductId == id);
         }
 
         public List<Product> Get()
         {
-            throw new NotImplementedException();
+            return _context.Products.ToList();
+
         }
 
-        public Product Get(Product entity)
+        public Product Get(int id)
         {
-            throw new NotImplementedException();
+            var product = _context.Products.Where(i => i.ProductId == id);
+            return (Product)product;
         }
 
         public void Create(Product entity)
@@ -56,4 +59,3 @@ namespace Infrastructure.Data
             throw new NotImplementedException();
         }
     }
-}
