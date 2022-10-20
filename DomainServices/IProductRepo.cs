@@ -11,5 +11,6 @@ namespace DomainServices
     {
         Task<IEnumerable<Product>> GetAllAsync();
         Task<Product> GetByIdAsync(int id);
+        public Product GetbyId(int etityId);
     }
 }

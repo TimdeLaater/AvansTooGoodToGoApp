@@ -9,11 +9,11 @@ namespace DomainServices
 {
     public interface IRepo<T>
     {
-        public List<T> Get();
-        public T Get(T entity);
+        public List<T> GetAll();
+        
         public void Create(T entity);
-        public void Remove(T etityId);
-        public void Update(T Entity, T etityId);
+        public void Remove(int etityId);
+        public void Update(T Entity, int etityId);
 
     }
 }

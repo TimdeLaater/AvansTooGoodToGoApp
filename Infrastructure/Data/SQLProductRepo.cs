@@ -32,30 +32,38 @@ namespace Infrastructure.Data
             return await _context.Products.FirstOrDefaultAsync(i => i.ProductId == id);
         }
 
-        public List<Product> Get()
+        public List<Product> GetAll()
         {
             return _context.Products.ToList();
 
         }
 
-        public Product Get(int id)
+        public Product GetbyId(int etityId)
         {
-            var product = _context.Products.Where(i => i.ProductId == id);
-            return (Product)product;
+            return _context.Products.Find(etityId);
+            
         }
 
         public void Create(Product entity)
         {
-            throw new NotImplementedException();
+            _context.Products.Add(entity);
+            _context.SaveChanges();
         }
 
-        public void Remove(Product etityId)
+        public void Remove(int id)
         {
-            throw new NotImplementedException();
+            _context.Products.Remove(_context.Products.Find(id));
+            _context.SaveChanges();
         }
 
-        public void Update(Product Entity, Product etityId)
+        public void Update(Product Entity, int etityId)
         {
-            throw new NotImplementedException();
+
+            _context.Update(Entity);
+            _context.SaveChanges();
         }
+
+        
     }
+
+}
