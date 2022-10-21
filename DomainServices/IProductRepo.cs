@@ -9,8 +9,8 @@ namespace DomainServices
 {
     public interface IProductRepo: IRepo<Product>
     {
-        public Product Get(int productId);
-        public void Remove(int productId);
-        public void Update(Product product, int productId);
+        Task<IEnumerable<Product>> GetAllAsync();
+        Task<Product> GetByIdAsync(int id);
+        public Product GetbyId(int etityId);
     }
 }

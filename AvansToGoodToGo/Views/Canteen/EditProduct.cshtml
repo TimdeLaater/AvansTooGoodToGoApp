@@ -1,0 +1,28 @@
+﻿@model DomainModel.Models.Product
+
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Patient: @Html.DisplayFor(modelItem => Model.Name)</title>
+</head>
+<body>
+    <form asp-action="PatientEdit" method="post">
+
+        <div asp-validation-summary="All"></div>
+        <div>
+            <label asp-for="Name">Naam</label>
+            <input asp-for="Name" />
+        </div>
+        <div>
+            <label asp-for="Alcohol">Geboortedatum:</label>
+            <input asp-for="Alcohol" />
+        </div>
+       
+        <div>
+            <label asp-for="Alcohol">Bevat het product alcohol</label>
+            Ja<input type="radio" asp-for="Alcohol" value="true" />
+            Nee<input type="radio" asp-for="Alcohol" value="false" />
+        </div>
+        <button class="btn btn-primary" type="submit">Aanpassen</button>
+    </form>
+
+</body>

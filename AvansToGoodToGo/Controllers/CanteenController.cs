@@ -22,7 +22,7 @@ namespace AvansToGoodToGo.Controllers
 
         public IActionResult Products()
         {
-            return View(_productRepo.Get().ToList());
+            return View(_productRepo.GetAll().ToList());
         }
         [HttpGet]
 
@@ -35,45 +35,53 @@ namespace AvansToGoodToGo.Controllers
         {
             if(ModelState.IsValid)
             {
-                if (_productRepo.Get().Exists(t => t?.Name == product.Name))
+                if (_productRepo.GetAll().Exists(t => t?.Name == product.Name))
                 {
                     ModelState.AddModelError(String.Empty, "De dit product bestaat al.");
                     return View();
                 }
 
                 _productRepo.Create(product);
-                await Task.Delay(1000);
+               
                 return View("Products");
             }
-            return View(product);
+            return  View(product);
         }
 
         // GET: CanteenController/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
 
-       
 
-        // POST: CanteenController/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+
+
 
         // GET: CanteenController/Edit/5
-        public ActionResult Edit(int id)
+        [HttpGet]
+        public IActionResult EditProduct(int id)
         {
+            if(id == null)
+            {
+                return NotFound();
+            }
+            var product = _productRepo.GetbyId(id);
+            if(product == null)
+            {
+                return NotFound();
+            }
+            
+            return View(product);
+        }
+        [HttpPost]
+        public IActionResult EditProduct(Product product, int id)
+        {
+            return View("Products");
+        }
+        public IActionResult ProductDeleted(int id)
+        {
+            if (ModelState.IsValid)
+            {
+                _productRepo.Remove(id);
+                return RedirectToAction(nameof(Index));
+            }
             return View();
         }
 
