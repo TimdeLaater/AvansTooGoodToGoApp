@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace DomainModel.Models
 {
-    internal class Canteen
+    public class Canteen
     {
         public int canteenId { get; set; }  
-        public string location  { get; set; }
+        public string Name  { get; set; }
         public City city { get; set; }    
-        public Boolean servesHot { get; set; }  
+        public Boolean ServesHot { get; set; }  
 
     }
 }

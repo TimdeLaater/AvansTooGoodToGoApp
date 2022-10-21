@@ -11,7 +11,7 @@ namespace Infrastructure
     public class FoodDBContext : DbContext
     {
         public DbSet<Product> Products { get; set; }
-
+        public DbSet<Package> Packages { get; set; }   
         public FoodDBContext(DbContextOptions<FoodDBContext> options) : base(options)
         {
             
