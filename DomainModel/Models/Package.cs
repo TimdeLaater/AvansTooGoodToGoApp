@@ -18,7 +18,7 @@ namespace DomainModel.Models
         public int Price { get; set;}
         [ForeignKey("StudentModel")]
         public string? StudentId { get; set;}    //TODO: Needs to be linked to the student who reserved the Package.
-        public StudentModel Student { get; set; }
+        public StudentModel? Student { get; set; }
         public DateTime orderPickup { get; set;}   
         public Boolean collected { get; set;}
 

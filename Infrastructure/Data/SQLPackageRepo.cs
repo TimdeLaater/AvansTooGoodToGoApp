@@ -9,13 +9,15 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Data
 {
-    internal class SQLPackageRepo : IPackageRepo
+    public class SQLPackageRepo : IPackageRepo
     {
         private readonly FoodDBContext _context;
         public SQLPackageRepo(FoodDBContext foodDBContext)
         {
             this._context = foodDBContext;
         }
+
+        
 
         public void Create(Package package)
         {
