@@ -19,6 +19,17 @@ namespace AvansTooGoodToGo.Controllers
             var packages = _packageRepo.GetAll();
             return View(packages);
         }
+        [HttpGet]
+        public IActionResult AddPackage()
+        {
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> AddPackage(Package Package)
+        {
+
+            return View("index");
+        }
 
     }
 }

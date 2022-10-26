@@ -51,7 +51,7 @@ namespace Infrastructure.Data
         }
 
         public async Task<Package> GetByIdAsync(int id) => await _context.Packages
-            .Include(p => p.ProductList)
+            .Include(p => p.PackageId)
             .FirstOrDefaultAsync();
 
         public void Remove(int etityId)
