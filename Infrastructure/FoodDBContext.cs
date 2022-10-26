@@ -45,18 +45,16 @@ namespace Infrastructure
             };
 
 
-            Package[] packages = new Package[]
-            {
-                new Package(69, "Pasta Kaasoufle",false,10, new DateTime(2022,05,10,18,30,0),false, MealType.HotMeal)
-            };
+            
             Product[] products = new Product[]
             {
                 new Product(69, "KaasoufleeBitch", false ),
                 new Product(99, "Brie", false ),
             };
             
+            
             modelBuilder.Entity<Canteen>().HasData(canteens);
-            modelBuilder.Entity<Package>().HasData(packages);
+            
             modelBuilder.Entity<Product>().HasData(products);
             
 

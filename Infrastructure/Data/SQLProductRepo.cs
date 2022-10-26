@@ -56,7 +56,7 @@ namespace Infrastructure.Data
             _context.SaveChanges();
         }
 
-        public void Update(Product Entity, int etityId)
+        public void Update(Product Entity)
         {
 
             _context.Update(Entity);

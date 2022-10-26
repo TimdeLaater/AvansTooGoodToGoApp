@@ -13,7 +13,7 @@ namespace DomainServices
         
         public void Create(T entity);
         public void Remove(int etityId);
-        public void Update(T Entity, int etityId);
+        public void Update(T Entity);
 
     }
 }

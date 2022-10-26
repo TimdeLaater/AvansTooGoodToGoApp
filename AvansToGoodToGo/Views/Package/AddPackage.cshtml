@@ -1,13 +1,19 @@
 ﻿
-@model DomainModel.Models.Package;
+@model AvansTooGoodToGo.ViewModels.CreatePackageViewModel
 @{
-
+    if(ViewBag.Products != null){
+        List<Product> products = ViewBag.Products;
+    }
+    else{
+        
+    }
 }
+
 <div class="text-center">
     <h1 class="display-4">Voeg het pakket toe</h1>
 </div>
 <div>
-    <form asp-action="AddPAckage" method="post">
+    <form asp-action="AddPackage" method="post">
 
         <div asp-validation-summary="All"></div>
         <div>
@@ -19,66 +25,55 @@
             <input asp-for="Price" />
         </div>
         <div>
-            <label asp-for="Canteen">Kantine</label>
-            <input asp-for="Canteen" />
+            <label asp-for="Alcohol">Bevat het product alcohol</label>
+            Ja<input type="radio" asp-for="Alcohol" value="true" />
+            Nee<input type="radio" asp-for="Alcohol" value="false" />
         </div>
-        <div class="tablealign">
-            <div></div>
-            <table class="table table-sm table-bordered">
-                <thead class="thead-dark">
-                    <tr>
-                        <th>
-                            <div>Naam</div>
-                        </th>
-                       <th>
-                            <div>Alchohol</div>
-                        </th>
-                        
-                        <th><div></div></th>
-                        <th>
-                            <a class="btn btn-sm btn-primary" asp-action="Filtro" asp-route-id="">
-                                SEARCH
-                            </a>
-                        </th>
-                        <th><div></div></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in ViewBag.data)
-                    {
-                        <tr>
-                            <td>
-                                @item.Name
-                            </td>
-                            <td>
-                                @item.Alcohol
-                            </td>
-                        
-                            <td>
-                                <a class="btn btn-sm btn-primary" asp-action="Edit" asp-route-id="@item.ProductId">
-                                    EDIT
-                                </a>
-                            </td>
-                            <td>
-                                <a class="btn btn-sm btn-primary" asp-action="Details" asp-route-id="@item.ProductId">
-                                    DETAILS
-                                </a>
-                            </td>
-                            <td>
-                                <a class="btn btn-sm btn-danger" asp-action="Delete" asp-route-id="@item.ProductId">
-                                    DELETEthis
-                                </a>
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        </div>
-        <div>
-            <button type="button" class="btn btn-primary" data-toggle="ajax-modal" data-target="#addProductToPackage" data-url="@Url.Action("AddProducts")">Voeg product toe</button>
-        </div>
-        
+        <fieldset>
+            Movie Type
+            <select asp-for="MealType" id="MealType" name="MealType">
 
-        <button class="btn btn-primary" type="button">Voeg pakket toe</button>
+                <option value="1">HotMeal</option>
+
+                <option value="2">Liquor</option>
+
+                <option value="3">ColdMeal</option>
+
+                <option value="4">Drink</option>
+
+            </select>
+        </fieldset>
+        <div class="form-group">
+            <label asp-for="orderPickup" class="control-label"></label>
+            <input type="datetime-local" asp-for="orderPickup" value="@DateTime.Today.ToString("yyyy-MM-ddTHH:mm")" class="form-control" />
+            <span asp-validation-for="orderPickup" class="text-danger"></span>
+        </div>
+            <div class="form-group">
+                <label>Selecteer producten</label>
+@*              @Html.DropDownListFor(model => model.SelectedProductId, new SelectList(Model.ProductCollectie,"Id","BeschrijvendeNaam"), new {id = "normalDropDown"})
+            *@        @Html.ListBoxFor(model => model.ProductIds, new MultiSelectList(ViewBag.Products,"ProductId","Name"), new {id = "multiSelectDropDown", multiple="multiple",required="required"})
+
+            </div>
+
+
+
+
+       
+
+
+        <button class="btn btn-primary" type="submit">Voeg pakket toe</button>
     </form>
 </div>
+@section scripts{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        $(function () {
+            $("#multiSelectDropDown").chosen({
+                
+            });
+        })
+    </script>
+
+        }

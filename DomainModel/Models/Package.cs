@@ -10,9 +10,9 @@ namespace DomainModel.Models
 {
     public class Package
     {
-        public Package(int packageId, string name,bool alcohol, int price, DateTime orderPickup, bool collected, MealType mealType)
+        public Package( string name,bool alcohol, int price, DateTime orderPickup, bool collected, MealType mealType)
         {
-            PackageId = packageId;
+           
             Name = name;
             Alcohol = alcohol;
             Price = price;
@@ -20,6 +20,7 @@ namespace DomainModel.Models
             this.collected = collected;
             MealType = mealType;
         }
+        
 
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int PackageId { get; set; }  
@@ -36,7 +37,7 @@ namespace DomainModel.Models
         public MealType MealType { get; set;}
 
         //TODO: Many to Many with products
-        public List<Package_Product> Package_Product { get; set; }
+        public List<Package_Product>? Package_Product { get; set; }
 
     }
 }

@@ -27,6 +27,16 @@ namespace Infrastructure.Data
 
         }
 
+        public int CreateAndGet(Package package)
+        {
+            _context.Packages.Add(package);
+            
+            _context.SaveChanges();
+            int id = package.PackageId;
+            return id;
+
+        }
+
         public List<Package> GetAll()
         {
             return _context.Packages.ToList();
@@ -61,7 +71,7 @@ namespace Infrastructure.Data
 
         }
 
-        public void Update(Package Entity, int etityId)
+        public void Update(Package Entity)
         {
             _context.Update(Entity);
             _context.SaveChanges();

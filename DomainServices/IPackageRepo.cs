@@ -10,6 +10,7 @@ namespace DomainServices
     public interface IPackageRepo : IRepo<Package>
     {
         Task<IEnumerable<Package>> GetAllAsync();
+        public int CreateAndGet(Package package);
         Task<Package> GetByIdAsync(int id);
         public Package GetbyId(int id);
         Task<IEnumerable<Product>> GetAllProducts(int PackageId);
