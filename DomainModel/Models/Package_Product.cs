@@ -8,8 +8,6 @@ namespace DomainModel.Models
 {
     public class Package_Product
     {
-        
-
         public int Id { get; set; }
 
         public int ProductId { get; set; }

@@ -9,10 +9,12 @@ namespace AvansTooGoodToGo.Controllers
     {
         private readonly IPackageRepo _packageRepo;
         private readonly ILogger<PackageController> _logger;
-        public PackageController(ILogger<PackageController> logger, IPackageRepo packageRepo)
+        private readonly IProductRepo _productRepo;
+        public PackageController(ILogger<PackageController> logger, IPackageRepo packageRepo, IProductRepo productRepo)
         {
             _packageRepo = packageRepo;
             _logger = logger;
+            _productRepo = productRepo;
         }
         public IActionResult Index()
         {
@@ -22,12 +24,15 @@ namespace AvansTooGoodToGo.Controllers
         [HttpGet]
         public IActionResult AddPackage()
         {
+            var products = _productRepo.GetAll();
+            ViewBag.data = products;
+            
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> AddPackage(Package Package)
+        public IActionResult AddPackage(Package Package)
         {
-
+            
             return View("index");
         }
 
