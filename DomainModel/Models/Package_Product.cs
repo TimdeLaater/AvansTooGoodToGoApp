@@ -14,6 +14,11 @@ namespace DomainModel.Models
             ProductId = productId;
             Product = product;
             PackageId = packageId;
+            
+        }
+        public Package_Product()
+        {
+
         }
 
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

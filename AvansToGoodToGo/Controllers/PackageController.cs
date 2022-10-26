@@ -31,7 +31,7 @@ namespace AvansTooGoodToGo.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult AddPackage(CreatePackageViewModel packageViewModel)
+        public async Task<IActionResult> AddPackageAsync(CreatePackageViewModel packageViewModel)
         {
             Package newPackage = new Package(
                 packageViewModel.Name,
@@ -42,20 +42,21 @@ namespace AvansTooGoodToGo.Controllers
                 packageViewModel.MealType
                 );
             var packageId = _packageRepo.CreateAndGet(newPackage);
-            CreatePackageProducts(packageViewModel, newPackage, packageId);
+            await CreatePackageProducts(packageViewModel, newPackage, packageId);
             
             
 
-            //TODO: Send The canteen to the form
-            return View();
+            
+            return RedirectToAction("Index");
         }
 
-        public void CreatePackageProducts(CreatePackageViewModel packageViewModel, Package package, int id)
+        public async Task CreatePackageProducts(CreatePackageViewModel packageViewModel, Package package, int id)
         {
+            package.Package_Product = new List<Package_Product>();
             foreach(int productId in packageViewModel.ProductIds)
             {
                var product = _productRepo.GetbyId(productId);
-                var packageProduct = new Package_Product(productId, product,id);
+                var packageProduct = new Package_Product(productId, product, id);
                 package.Package_Product.Add(packageProduct);
 
             }
