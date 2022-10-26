@@ -33,7 +33,8 @@ namespace AvansTooGoodToGo.Controllers
         [HttpPost]
         public async Task<IActionResult> AddPackageAsync(CreatePackageViewModel packageViewModel)
         {
-            Package newPackage = new Package(
+            if (ModelState.IsValid) {
+                Package newPackage = new Package(
                 packageViewModel.Name,
                 packageViewModel.Alcohol,
                 packageViewModel.Price,
@@ -41,13 +42,17 @@ namespace AvansTooGoodToGo.Controllers
                 false,
                 packageViewModel.MealType
                 );
-            var packageId = _packageRepo.CreateAndGet(newPackage);
-            await CreatePackageProducts(packageViewModel, newPackage, packageId);
-            
-            
+                var packageId = _packageRepo.CreateAndGet(newPackage);
+                await CreatePackageProducts(packageViewModel, newPackage, packageId);
+
+
+
+
+                return RedirectToAction("Index");
+            }
+            return View(packageViewModel);
 
             
-            return RedirectToAction("Index");
         }
 
         public async Task CreatePackageProducts(CreatePackageViewModel packageViewModel, Package package, int id)
