@@ -13,7 +13,10 @@ namespace AvansTooGoodToGo.ViewModels
         public Boolean Alcohol { get; set; } //TODO: Look up if items contains a 18+ item for this Boolean.
         [Required]
         public int Price { get; set; }
+        [Required]
+        [DataType(DataType.DateTime)]
         public DateTime orderPickup { get; set; }
+        [Required]
         public MealType MealType { get; set; }
 
         
