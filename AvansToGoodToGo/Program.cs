@@ -41,7 +41,7 @@ builder.Services.AddAuthorization(options =>
 
 //DI
 builder.Services.AddScoped<IProductRepo, SQLProductRepo>();
-
+builder.Services.AddScoped<IPackageRepo, SQLPackageRepo>();
 
 builder.Services.Configure<CookiePolicyOptions>(options =>
 {

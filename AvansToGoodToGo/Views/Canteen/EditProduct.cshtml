@@ -1,19 +1,11 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
-@model Product
+﻿@model DomainModel.Models.Product
+
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>Product</title>
+    <title>Patient: @Html.DisplayFor(modelItem => Model.Name)</title>
 </head>
-
 <body>
-    <div>
-        <h1 class="display-4">Voeg hier een nieuw product toe</h1>
-    </div>
-    <form asp-action="AddProduct" method="post">
+    <form asp-action="PatientEdit" method="post">
 
         <div asp-validation-summary="All"></div>
         <div>
@@ -21,12 +13,16 @@
             <input asp-for="Name" />
         </div>
         <div>
+            <label asp-for="Alcohol">Geboortedatum:</label>
+            <input asp-for="Alcohol" />
+        </div>
+       
+        <div>
             <label asp-for="Alcohol">Bevat het product alcohol</label>
             Ja<input type="radio" asp-for="Alcohol" value="true" />
             Nee<input type="radio" asp-for="Alcohol" value="false" />
         </div>
-        
-        <button class="btn btn-primary" type="button" >Voeg product toe</button>
+        <button class="btn btn-primary" type="submit">Aanpassen</button>
     </form>
 
 </body>

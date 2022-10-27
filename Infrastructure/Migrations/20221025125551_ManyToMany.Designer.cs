@@ -4,6 +4,7 @@ using Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(FoodDBContext))]
-    partial class FoodDBContextModelSnapshot : ModelSnapshot
+    [Migration("20221025125551_ManyToMany")]
+    partial class ManyToMany
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -43,43 +45,6 @@ namespace Infrastructure.Migrations
                     b.HasKey("canteenId");
 
                     b.ToTable("Canteen");
-
-                    b.HasData(
-                        new
-                        {
-                            canteenId = 44,
-                            Name = "LA",
-                            ServesHot = true,
-                            city = 1
-                        },
-                        new
-                        {
-                            canteenId = 45,
-                            Name = "LD",
-                            ServesHot = true,
-                            city = 1
-                        },
-                        new
-                        {
-                            canteenId = 46,
-                            Name = "HA",
-                            ServesHot = true,
-                            city = 1
-                        },
-                        new
-                        {
-                            canteenId = 47,
-                            Name = "HA",
-                            ServesHot = true,
-                            city = 2
-                        },
-                        new
-                        {
-                            canteenId = 48,
-                            Name = "HA",
-                            ServesHot = true,
-                            city = 3
-                        });
                 });
 
             modelBuilder.Entity("DomainModel.Models.Package", b =>
@@ -165,20 +130,6 @@ namespace Infrastructure.Migrations
                     b.HasKey("ProductId");
 
                     b.ToTable("Products");
-
-                    b.HasData(
-                        new
-                        {
-                            ProductId = 69,
-                            Alcohol = false,
-                            Name = "KaasoufleeBitch"
-                        },
-                        new
-                        {
-                            ProductId = 99,
-                            Alcohol = false,
-                            Name = "Brie"
-                        });
                 });
 
             modelBuilder.Entity("DomainModel.Models.StudentModel", b =>
