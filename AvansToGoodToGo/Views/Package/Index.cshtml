@@ -1,0 +1,21 @@
+﻿@model IEnumerable<Package>
+<div class="text-center">
+    <h1 class="display-4">Welkom bij de Avans kantine </h1>
+    <button type="button" onclick="location.href='@Url.Action("AddPackage", "Package")'">Naar Pakketten</button>
+</div>
+<div>
+    <table cellpadding="5" cellspacing="0">
+        <tr>
+            <th>Naam</th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                <td>@Html.DisplayFor(modelItem => item.Price)</td>
+                <td><a asp-action="EditProduct" asp-route-id="@item.PackageId">Edit</a></td>
+                <td><a asp-action="ProductDeleted" asp-route-id="@item.PackageId">Delete</a></td>
+            </tr>
+        }
+    </table>
+</div>

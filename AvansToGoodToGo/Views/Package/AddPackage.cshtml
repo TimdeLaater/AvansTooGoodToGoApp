@@ -1,0 +1,79 @@
+﻿
+@model AvansTooGoodToGo.ViewModels.CreatePackageViewModel
+@{
+    if(ViewBag.Products != null){
+        List<Product> products = ViewBag.Products;
+    }
+    else{
+        
+    }
+}
+
+<div class="text-center">
+    <h1 class="display-4">Voeg het pakket toe</h1>
+</div>
+<div>
+    <form asp-action="AddPackage" method="post">
+
+        <div asp-validation-summary="All"></div>
+        <div>
+            <label asp-for="Name">Naam</label>
+            <input asp-for="Name" />
+        </div>
+        <div>
+            <label asp-for="Price">Prijs</label>
+            <input asp-for="Price" />
+        </div>
+        <div>
+            <label asp-for="Alcohol">Bevat het product alcohol</label>
+            Ja<input type="radio" asp-for="Alcohol" value="true" />
+            Nee<input type="radio" asp-for="Alcohol" value="false" />
+        </div>
+        <fieldset>
+            Movie Type
+            <select asp-for="MealType" id="MealType" name="MealType">
+
+                <option value="1">HotMeal</option>
+
+                <option value="2">Liquor</option>
+
+                <option value="3">ColdMeal</option>
+
+                <option value="4">Drink</option>
+
+            </select>
+        </fieldset>
+        <div class="form-group">
+            <label asp-for="orderPickup" class="control-label"></label>
+            <input type="datetime-local" asp-for="orderPickup" value="@DateTime.Today.ToString("yyyy-MM-ddTHH:mm")" class="form-control" />
+            <span asp-validation-for="orderPickup" class="text-danger"></span>
+        </div>
+            <div class="form-group">
+                <label>Selecteer producten</label>
+@*              @Html.DropDownListFor(model => model.SelectedProductId, new SelectList(Model.ProductCollectie,"Id","BeschrijvendeNaam"), new {id = "normalDropDown"})
+            *@        @Html.ListBoxFor(model => model.ProductIds, new MultiSelectList(ViewBag.Products,"ProductId","Name"), new {id = "multiSelectDropDown", multiple="multiple",required="required"})
+
+            </div>
+
+
+
+
+       
+
+
+        <button class="btn btn-primary" type="submit">Voeg pakket toe</button>
+    </form>
+</div>
+@section scripts{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        $(function () {
+            $("#multiSelectDropDown").chosen({
+                
+            });
+        })
+    </script>
+
+        }

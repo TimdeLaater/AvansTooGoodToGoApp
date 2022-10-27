@@ -4,6 +4,7 @@ using Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(FoodDBContext))]
-    partial class FoodDBContextModelSnapshot : ModelSnapshot
+    [Migration("20221024123136_NullablePAckage")]
+    partial class NullablePAckage
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -43,43 +45,6 @@ namespace Infrastructure.Migrations
                     b.HasKey("canteenId");
 
                     b.ToTable("Canteen");
-
-                    b.HasData(
-                        new
-                        {
-                            canteenId = 44,
-                            Name = "LA",
-                            ServesHot = true,
-                            city = 1
-                        },
-                        new
-                        {
-                            canteenId = 45,
-                            Name = "LD",
-                            ServesHot = true,
-                            city = 1
-                        },
-                        new
-                        {
-                            canteenId = 46,
-                            Name = "HA",
-                            ServesHot = true,
-                            city = 1
-                        },
-                        new
-                        {
-                            canteenId = 47,
-                            Name = "HA",
-                            ServesHot = true,
-                            city = 2
-                        },
-                        new
-                        {
-                            canteenId = 48,
-                            Name = "HA",
-                            ServesHot = true,
-                            city = 3
-                        });
                 });
 
             modelBuilder.Entity("DomainModel.Models.Package", b =>
@@ -93,9 +58,6 @@ namespace Infrastructure.Migrations
                     b.Property<bool>("Alcohol")
                         .HasColumnType("bit");
 
-                    b.Property<int>("MealType")
-                        .HasColumnType("int");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -104,6 +66,7 @@ namespace Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("StudentId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<int?>("canteenId")
@@ -124,7 +87,7 @@ namespace Infrastructure.Migrations
                     b.ToTable("Packages");
                 });
 
-            modelBuilder.Entity("DomainModel.Models.Package_Product", b =>
+            modelBuilder.Entity("DomainModel.Models.Photo", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -132,19 +95,30 @@ namespace Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("PackageId")
-                        .HasColumnType("int");
+                    b.Property<byte[]>("Bytes")
+                        .IsRequired()
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FileExtension")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
 
+                    b.Property<decimal>("Size")
+                        .HasColumnType("decimal(18,2)");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("PackageId");
+                    b.HasIndex("ProductId")
+                        .IsUnique();
 
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("package_Products");
+                    b.ToTable("Photo");
                 });
 
             modelBuilder.Entity("DomainModel.Models.Product", b =>
@@ -162,23 +136,14 @@ namespace Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("PackageId")
+                        .HasColumnType("int");
+
                     b.HasKey("ProductId");
 
-                    b.ToTable("Products");
+                    b.HasIndex("PackageId");
 
-                    b.HasData(
-                        new
-                        {
-                            ProductId = 69,
-                            Alcohol = false,
-                            Name = "KaasoufleeBitch"
-                        },
-                        new
-                        {
-                            ProductId = 99,
-                            Alcohol = false,
-                            Name = "Brie"
-                        });
+                    b.ToTable("Products");
                 });
 
             modelBuilder.Entity("DomainModel.Models.StudentModel", b =>
@@ -216,7 +181,9 @@ namespace Infrastructure.Migrations
                 {
                     b.HasOne("DomainModel.Models.StudentModel", "Student")
                         .WithMany()
-                        .HasForeignKey("StudentId");
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("DomainModel.Models.Canteen", "Canteen")
                         .WithMany()
@@ -227,33 +194,33 @@ namespace Infrastructure.Migrations
                     b.Navigation("Student");
                 });
 
-            modelBuilder.Entity("DomainModel.Models.Package_Product", b =>
+            modelBuilder.Entity("DomainModel.Models.Photo", b =>
                 {
-                    b.HasOne("DomainModel.Models.Package", "Package")
-                        .WithMany("Package_Product")
-                        .HasForeignKey("PackageId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("DomainModel.Models.Product", "Product")
-                        .WithMany("Package_Product")
-                        .HasForeignKey("ProductId")
+                        .WithOne("Photo")
+                        .HasForeignKey("DomainModel.Models.Photo", "ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Package");
 
                     b.Navigation("Product");
                 });
 
+            modelBuilder.Entity("DomainModel.Models.Product", b =>
+                {
+                    b.HasOne("DomainModel.Models.Package", null)
+                        .WithMany("ProductList")
+                        .HasForeignKey("PackageId");
+                });
+
             modelBuilder.Entity("DomainModel.Models.Package", b =>
                 {
-                    b.Navigation("Package_Product");
+                    b.Navigation("ProductList");
                 });
 
             modelBuilder.Entity("DomainModel.Models.Product", b =>
                 {
-                    b.Navigation("Package_Product");
+                    b.Navigation("Photo")
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }
