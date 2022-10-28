@@ -1,9 +1,7 @@
 ﻿using DomainModel.Models.Enum;
-using Microsoft.Build.Framework;
 using System.ComponentModel.DataAnnotations;
-using RequiredAttribute = System.ComponentModel.DataAnnotations.RequiredAttribute;
 
-namespace AvansTooGoodToGo.ViewModels
+namespace AvansTooGoodToGo.Models
 {
     public class RegisterStudentViewModel
     {
@@ -17,7 +15,7 @@ namespace AvansTooGoodToGo.ViewModels
         public string Password { get; set; }
         public City City { get; set; }
         [Required]
-        
+
         public int StudentNr { get; set; }
         [Required]
         [DataType(DataType.PhoneNumber)]
@@ -25,6 +23,6 @@ namespace AvansTooGoodToGo.ViewModels
         [Required]
         [DataType(DataType.Date)]
         public string BirthDay { get; set; }
-        
+
     }
 }

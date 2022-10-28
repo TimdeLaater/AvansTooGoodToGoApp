@@ -16,9 +16,10 @@
     <form asp-action="AddProduct" method="post">
 
         <div asp-validation-summary="All"></div>
-        <div>
-            <label asp-for="Name">Naam</label>
-            <input asp-for="Name" />
+        <div class="form-group">
+            <label asp-for="Name" class="control-label"></label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
         </div>
         <div>
             <label asp-for="Alcohol">Bevat het product alcohol</label>
