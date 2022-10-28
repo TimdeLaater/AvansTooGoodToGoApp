@@ -1,5 +1,4 @@
 ﻿using AvansToGoodToGo.Models;
-using AvansTooGoodToGo.Models;
 using AvansTooGoodToGo.ViewModels;
 using DomainModel.Models;
 using Microsoft.AspNetCore.Identity;

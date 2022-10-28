@@ -1,7 +1,7 @@
 ﻿using DomainModel.Models.Enum;
 using System.ComponentModel.DataAnnotations;
 
-namespace AvansTooGoodToGo.Models
+namespace AvansTooGoodToGo.ViewModels
 {
     public class RegisterStudentViewModel
     {
