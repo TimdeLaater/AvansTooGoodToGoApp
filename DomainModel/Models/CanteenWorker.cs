@@ -12,7 +12,7 @@ namespace DomainModel.Models
     public class CanteenWorker
     {
         [Key]
-        public int WorkerId { get; set; }
+        public int CanteenWorkerId { get; set; }
         public string Name { get; set; }
         public string WorkerNr { get; set; }  
         public Canteen Canteen { get; set; }

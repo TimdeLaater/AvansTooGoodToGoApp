@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(FoodDBContext))]
-    [Migration("20221028111030_regsiter")]
-    partial class regsiter
+    [Migration("20221028114521_intialMigration")]
+    partial class intialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -70,10 +70,6 @@ namespace Infrastructure.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
 
-                    b.Property<string>("Phonenumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
@@ -118,52 +114,15 @@ namespace Infrastructure.Migrations
                     b.HasKey("canteenId");
 
                     b.ToTable("Canteen");
-
-                    b.HasData(
-                        new
-                        {
-                            canteenId = 44,
-                            Name = "LA",
-                            ServesHot = true,
-                            city = 1
-                        },
-                        new
-                        {
-                            canteenId = 45,
-                            Name = "LD",
-                            ServesHot = true,
-                            city = 1
-                        },
-                        new
-                        {
-                            canteenId = 46,
-                            Name = "HA",
-                            ServesHot = true,
-                            city = 1
-                        },
-                        new
-                        {
-                            canteenId = 47,
-                            Name = "HA",
-                            ServesHot = true,
-                            city = 2
-                        },
-                        new
-                        {
-                            canteenId = 48,
-                            Name = "HA",
-                            ServesHot = true,
-                            city = 3
-                        });
                 });
 
             modelBuilder.Entity("DomainModel.Models.CanteenWorker", b =>
                 {
-                    b.Property<int>("WorkerId")
+                    b.Property<int>("CanteenWorkerId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("WorkerId"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CanteenWorkerId"), 1L, 1);
 
                     b.Property<string>("AppUserId")
                         .IsRequired()
@@ -180,7 +139,7 @@ namespace Infrastructure.Migrations
                     b.Property<int>("canteenId")
                         .HasColumnType("int");
 
-                    b.HasKey("WorkerId");
+                    b.HasKey("CanteenWorkerId");
 
                     b.HasIndex("canteenId");
 
@@ -270,20 +229,6 @@ namespace Infrastructure.Migrations
                     b.HasKey("ProductId");
 
                     b.ToTable("Products");
-
-                    b.HasData(
-                        new
-                        {
-                            ProductId = 69,
-                            Alcohol = false,
-                            Name = "KaasoufleeBitch"
-                        },
-                        new
-                        {
-                            ProductId = 99,
-                            Alcohol = false,
-                            Name = "Brie"
-                        });
                 });
 
             modelBuilder.Entity("DomainModel.Models.StudentModel", b =>
@@ -298,8 +243,9 @@ namespace Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("BirthDay")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("BirthDay")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("City")
                         .HasColumnType("int");

@@ -19,7 +19,7 @@ namespace DomainModel.Models
         public string Name { get; set; }
         public City City { get; set; }  
         public int StudentNr { get; set; }
-        public DateTime BirthDay { get; set; }
+        public string BirthDay { get; set; }
         public int NotCollected { get; set; }
 
         [ForeignKey("AppUser")]
