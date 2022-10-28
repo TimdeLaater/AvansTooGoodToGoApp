@@ -1,5 +1,6 @@
 ﻿using DomainModel.Models;
 using DomainModel.Models.Enum;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -9,11 +10,14 @@ using System.Threading.Tasks;
 
 namespace Infrastructure
 {
-    public class FoodDBContext : DbContext
+    public class FoodDBContext : IdentityDbContext<AppUser>
     {
         public DbSet<Product> Products { get; set; }
         public DbSet<Package> Packages { get; set; }  
         public DbSet<Package_Product> package_Products { get; set; }
+        public DbSet<StudentModel> Students { get; set; }
+        public DbSet<CanteenWorker> CanteenWorkers { get; set; }
+
         public FoodDBContext(DbContextOptions<FoodDBContext> options) : base(options)
         {
             

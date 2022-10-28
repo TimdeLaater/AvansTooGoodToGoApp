@@ -30,7 +30,7 @@ namespace DomainModel.Models
         public Boolean Alcohol { get; set;} //TODO: Look up if items contains a 18+ item for this Boolean.
         public int Price { get; set;}
         [ForeignKey("StudentModel")]
-        public string? StudentId { get; set;}    //TODO: Needs to be linked to the student who reserved the Package.
+        public int? StudentId { get; set;}    //TODO: Needs to be linked to the student who reserved the Package.
         public StudentModel? Student { get; set; }
         public DateTime orderPickup { get; set;}   
         public Boolean collected { get; set;}

@@ -5,6 +5,8 @@ using Microsoft.EntityFrameworkCore;
 using System.Configuration;
 using DomainServices;
 using Infrastructure.Data;
+using DomainModel.Models;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,15 +21,15 @@ builder.Services.AddDbContext<FoodDBContext>(options => options.UseSqlServer(
     builder.Configuration.GetConnectionString("Default")));
 
 //ID Framework
-builder.Services.AddDbContext<SecurityDbContext>(opts =>
-    opts.UseSqlServer(builder.Configuration.GetConnectionString("AuthDb"))
-        .EnableSensitiveDataLogging(true)
-);
 
-builder.Services.AddIdentity<IdentityUser, IdentityRole>()
-    .AddEntityFrameworkStores<SecurityDbContext>()
+
+builder.Services.AddIdentity<AppUser, IdentityRole>()
+    .AddEntityFrameworkStores<FoodDBContext>()
     .AddDefaultTokenProviders();
-
+builder.Services.AddMemoryCache();
+builder.Services.AddSession();
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)//Adds Cookies
+    .AddCookie();
 builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("OnlyPowerUsersAndUp", policy => policy
