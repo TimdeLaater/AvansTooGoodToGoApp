@@ -58,6 +58,16 @@ namespace AvansTooGoodToGo.Controllers
         {
             return View(new RegisterStudentViewModel());
         }
+        [HttpPost]
+        public async Task<IActionResult> RegisterStudent(RegisterStudentViewModel vm)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(vm);
+            }
+            
+            return View();
+        }
         public IActionResult RegisterCanteenWorker()
         {
             return View();
